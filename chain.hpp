@@ -12,16 +12,23 @@
             this->object = object;
         }
 
+        chain() {
+            this->object = T();
+            count = 0;
+        }
+
         ~chain() {
             while (previous_link != nullptr)
                 pop();
         }
 
         void push(const T& object) {
-            chain<T>* new_link = new chain<T>(this->object);
-            new_link->count = count;
-            new_link->previous_link = previous_link;
-            previous_link = new_link;
+            if (count >= 1) {
+                chain<T>* new_link = new chain<T>(this->object);
+                new_link->count = count;
+                new_link->previous_link = previous_link;
+                previous_link = new_link;
+            }
 
             this->object = object;
             count++;
